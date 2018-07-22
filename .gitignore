@@ -3,6 +3,6 @@
 .settings/
 bin/
 target
-
+.DS_Store
 .idea
 *.iml
