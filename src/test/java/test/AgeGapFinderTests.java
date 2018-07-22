@@ -1,7 +1,7 @@
 package test;
-import algorithm.F;
-import algorithm.FT;
-import algorithm.Finder;
+import algorithm.AgeGapFinder;
+import algorithm.AgeGapResult;
+import algorithm.Criteria;
 import algorithm.Person;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class FinderTests {
+public class AgeGapFinderTests {
 
 	private Person sue;
 	private Person greg;
@@ -30,12 +30,12 @@ public class FinderTests {
 	@Test
 	public void Returns_Empty_Results_When_Given_Empty_List() {
 		List<Person> list = new ArrayList<>();
-		Finder finder = new Finder(list);
+		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
-		F result = finder.Find(FT.One);
-		assertEquals(null, result.P1);
+		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
+		assertEquals(null, result.oldest);
 
-		assertEquals(null, result.P2);
+		assertEquals(null, result.youngest);
 	}
 
 	@Test
@@ -43,12 +43,12 @@ public class FinderTests {
 		List<Person> list = new ArrayList<>();
 		list.add(sue);
 
-		Finder finder = new Finder(list);
+		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
-		F result = finder.Find(FT.One);
+		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(null, result.P1);
-		assertEquals(null, result.P2);
+		assertEquals(null, result.oldest);
+		assertEquals(null, result.youngest);
 	}
 
 	@Test
@@ -56,12 +56,12 @@ public class FinderTests {
 		List<Person> list = new ArrayList<>();
 		list.add(sue);
 		list.add(greg);
-		Finder finder = new Finder(list);
+		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
-		F result = finder.Find(FT.One);
+		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(sue, result.P1);
-		assertEquals(greg, result.P2);
+		assertEquals(sue, result.oldest);
+		assertEquals(greg, result.youngest);
 	}
 
 	@Test
@@ -70,12 +70,12 @@ public class FinderTests {
 		list.add(mike);
 		list.add(greg);
 
-		Finder finder = new Finder(list);
+		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
-		F result = finder.Find(FT.Two);
+		AgeGapResult result = ageGapFinder.findBy(Criteria.FURTHEST);
 
-		assertEquals(greg, result.P1);
-		assertEquals(mike, result.P2);
+		assertEquals(greg, result.oldest);
+		assertEquals(mike, result.youngest);
 	}
 
 	@Test
@@ -85,12 +85,12 @@ public class FinderTests {
 		list.add(sarah);
 		list.add(mike);
 		list.add(greg);
-		Finder finder = new Finder(list);
+		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
-		F result = finder.Find(FT.Two);
+		AgeGapResult result = ageGapFinder.findBy(Criteria.FURTHEST);
 
-		assertEquals(sue, result.P1);
-		assertEquals(sarah, result.P2);
+		assertEquals(sue, result.oldest);
+		assertEquals(sarah, result.youngest);
 	}
 
 	@Test
@@ -101,12 +101,12 @@ public class FinderTests {
 		list.add(mike);
 		list.add(greg);
 
-		Finder finder = new Finder(list);
+		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
-		F result = finder.Find(FT.One);
+		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(sue, result.P1);
-		assertEquals(greg, result.P2);
+		assertEquals(sue, result.oldest);
+		assertEquals(greg, result.youngest);
 	}
 
 }
