@@ -33,9 +33,9 @@ public class AgeGapFinderTests {
 		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
 
 		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
-		assertEquals(null, result.oldest);
+		assertEquals(null, result.getOldest());
 
-		assertEquals(null, result.youngest);
+		assertEquals(null, result.getYoungest());
 	}
 
 	@Test
@@ -47,8 +47,8 @@ public class AgeGapFinderTests {
 
 		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(null, result.oldest);
-		assertEquals(null, result.youngest);
+		assertEquals(null, result.getOldest());
+		assertEquals(null, result.getYoungest());
 	}
 
 	@Test
@@ -60,8 +60,8 @@ public class AgeGapFinderTests {
 
 		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(sue, result.oldest);
-		assertEquals(greg, result.youngest);
+		assertEquals(sue, result.getOldest());
+		assertEquals(greg, result.getYoungest());
 	}
 
 	@Test
@@ -74,8 +74,8 @@ public class AgeGapFinderTests {
 
 		AgeGapResult result = ageGapFinder.findBy(Criteria.FURTHEST);
 
-		assertEquals(greg, result.oldest);
-		assertEquals(mike, result.youngest);
+		assertEquals(greg, result.getOldest());
+		assertEquals(mike, result.getYoungest());
 	}
 
 	@Test
@@ -89,8 +89,8 @@ public class AgeGapFinderTests {
 
 		AgeGapResult result = ageGapFinder.findBy(Criteria.FURTHEST);
 
-		assertEquals(sue, result.oldest);
-		assertEquals(sarah, result.youngest);
+		assertEquals(sue, result.getOldest());
+		assertEquals(sarah, result.getYoungest());
 	}
 
 	@Test
@@ -105,8 +105,8 @@ public class AgeGapFinderTests {
 
 		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(sue, result.oldest);
-		assertEquals(greg, result.youngest);
+		assertEquals(sue, result.getOldest());
+		assertEquals(greg, result.getYoungest());
 	}
 
 }

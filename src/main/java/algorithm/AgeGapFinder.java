@@ -17,13 +17,13 @@ public class AgeGapFinder {
             for (int j = i + 1; j < people.size(); j++) {
                 AgeGapResult ageGapResult = new AgeGapResult();
                 if (people.get(i).getBirthDate().getTime() < people.get(j).getBirthDate().getTime()) {
-                    ageGapResult.oldest = people.get(i);
-                    ageGapResult.youngest = people.get(j);
+                    ageGapResult.setOldest(people.get(i));
+                    ageGapResult.setYoungest(people.get(j));
                 } else {
-                    ageGapResult.oldest = people.get(j);
-                    ageGapResult.youngest = people.get(i);
+                    ageGapResult.setOldest(people.get(j));
+                    ageGapResult.setYoungest(people.get(i));
                 }
-                ageGapResult.difference = ageGapResult.youngest.getBirthDate().getTime() - ageGapResult.oldest.getBirthDate().getTime();
+                ageGapResult.setAgeGap(ageGapResult.getYoungest().getBirthDate().getTime() - ageGapResult.getOldest().getBirthDate().getTime());
                 ageGaps.add(ageGapResult);
             }
         }
@@ -36,13 +36,13 @@ public class AgeGapFinder {
         for (AgeGapResult result : ageGaps) {
             switch (criteria) {
                 case CLOSEST:
-                    if (result.difference < answer.difference) {
+                    if (result.getAgeGap() < answer.getAgeGap()) {
                         answer = result;
                     }
                     break;
 
                 case FURTHEST:
-                    if (result.difference > answer.difference) {
+                    if (result.getAgeGap() > answer.getAgeGap()) {
                         answer = result;
                     }
                     break;

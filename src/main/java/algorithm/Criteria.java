@@ -1,4 +1,5 @@
 package algorithm;
+
 public enum Criteria {
-	CLOSEST, FURTHEST
+    CLOSEST, FURTHEST
 }
