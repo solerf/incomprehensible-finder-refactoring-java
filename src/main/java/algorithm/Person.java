@@ -1,30 +1,34 @@
 package algorithm;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Person {
-	private String name;
-	private Date birthDate;
+    private String name;
+    private LocalDate birthDate;
 
-	public Person(String name, Date birthDate) {
-		this.name = name;
-		this.birthDate = birthDate;
-	}
+    public Person(String name, LocalDate birthDate) {
+        this.name = name;
+        this.birthDate = birthDate;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Date getBirthDate() {
-		return birthDate;
-	}
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
-	@Override
-	public String toString() {
-		return "Person{" +
-				"name='" + name + '\'' +
-				", birthDate=" + birthDate +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
+    }
+
+    public boolean isYoungerThan(Person person) {
+        return this.getBirthDate().isAfter(person.getBirthDate());
+    }
 }
 

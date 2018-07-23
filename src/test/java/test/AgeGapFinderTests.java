@@ -1,4 +1,5 @@
 package test;
+
 import algorithm.AgeGapFinder;
 import algorithm.AgeGapResult;
 import algorithm.Criteria;
@@ -6,107 +7,110 @@ import algorithm.Person;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
 public class AgeGapFinderTests {
 
-	private Person sue;
-	private Person greg;
-	private Person sarah;
-	private Person mike;
+    private Person sue;
+    private Person greg;
+    private Person sarah;
+    private Person mike;
 
-	@Before
-	public void setup() {
-		sue = new Person("Sue", new Date(50, 0, 1));
-		greg = new Person("Greg", new Date(52, 5, 1));
-		sarah = new Person("Sarah", new Date(82, 0, 1));
-		mike = new Person("Mike", new Date(79, 0, 1));
-	}
+    @Before
+    public void setup() {
+        sue = new Person("Sue", LocalDate.of(1950, Month.JANUARY, 1));
+        greg = new Person("Greg", LocalDate.of(1952, Month.JUNE, 1));
+        sarah = new Person("Sarah", LocalDate.of(1982, Month.JANUARY, 1));
+        mike = new Person("Mike", LocalDate.of(1979, Month.JANUARY, 1));
+    }
 
-	@Test
-	public void Returns_Empty_Results_When_Given_Empty_List() {
-		List<Person> list = new ArrayList<>();
-		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+    @Test
+    public void Returns_Empty_Results_When_Given_Empty_List() {
+        List<Person> list = new ArrayList<>();
 
-		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
-		assertEquals(null, result.getOldest());
+        AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        Optional<AgeGapResult> result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		assertEquals(null, result.getYoungest());
-	}
+        assertEquals(false, result.isPresent());
+        assertEquals(false, result.isPresent());
+    }
 
-	@Test
-	public void Returns_Empty_Results_When_Given_One_Person() {
-		List<Person> list = new ArrayList<>();
-		list.add(sue);
+    @Test
+    public void Returns_Empty_Results_When_Given_One_Person() {
+        List<Person> list = new ArrayList<>();
+        list.add(sue);
 
-		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        Optional<AgeGapResult> result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
+        assertEquals(false, result.isPresent());
+        assertEquals(false, result.isPresent());
+    }
 
-		assertEquals(null, result.getOldest());
-		assertEquals(null, result.getYoungest());
-	}
+    @Test
+    public void Returns_Closest_Two_For_Two_People() {
+        List<Person> list = new ArrayList<>();
+        list.add(sue);
+        list.add(greg);
 
-	@Test
-	public void Returns_Closest_Two_For_Two_People() {
-		List<Person> list = new ArrayList<>();
-		list.add(sue);
-		list.add(greg);
-		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        Optional<AgeGapResult> result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
+        assertEquals(true, result.isPresent());
+        assertEquals(sue, result.get().getOldest());
+        assertEquals(greg, result.get().getYoungest());
+    }
 
-		assertEquals(sue, result.getOldest());
-		assertEquals(greg, result.getYoungest());
-	}
+    @Test
+    public void Returns_Furthest_Two_For_Two_People() {
+        List<Person> list = new ArrayList<>();
+        list.add(mike);
+        list.add(greg);
 
-	@Test
-	public void Returns_Furthest_Two_For_Two_People() {
-		List<Person> list = new ArrayList<>();
-		list.add(mike);
-		list.add(greg);
+        AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        Optional<AgeGapResult> result = ageGapFinder.findBy(Criteria.FURTHEST);
 
-		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        assertEquals(true, result.isPresent());
+        assertEquals(greg, result.get().getOldest());
+        assertEquals(mike, result.get().getYoungest());
+    }
 
-		AgeGapResult result = ageGapFinder.findBy(Criteria.FURTHEST);
+    @Test
+    public void Returns_Furthest_Two_For_Four_People() {
+        List<Person> list = new ArrayList<>();
+        list.add(sue);
+        list.add(sarah);
+        list.add(mike);
+        list.add(greg);
 
-		assertEquals(greg, result.getOldest());
-		assertEquals(mike, result.getYoungest());
-	}
+        AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        Optional<AgeGapResult> result = ageGapFinder.findBy(Criteria.FURTHEST);
 
-	@Test
-	public void Returns_Furthest_Two_For_Four_People() {
-		List<Person> list = new ArrayList<>();
-		list.add(sue);
-		list.add(sarah);
-		list.add(mike);
-		list.add(greg);
-		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        assertEquals(true, result.isPresent());
+        assertEquals(sue, result.get().getOldest());
+        assertEquals(sarah, result.get().getYoungest());
+    }
 
-		AgeGapResult result = ageGapFinder.findBy(Criteria.FURTHEST);
+    @Test
+    public void Returns_Closest_Two_For_Four_People() {
+        List<Person> list = new ArrayList<>();
+        list.add(sue);
+        list.add(sarah);
+        list.add(mike);
+        list.add(greg);
 
-		assertEquals(sue, result.getOldest());
-		assertEquals(sarah, result.getYoungest());
-	}
+        AgeGapFinder ageGapFinder = new AgeGapFinder(list);
+        Optional<AgeGapResult> result = ageGapFinder.findBy(Criteria.CLOSEST);
 
-	@Test
-	public void Returns_Closest_Two_For_Four_People() {
-		List<Person> list = new ArrayList<>();
-		list.add(sue);
-		list.add(sarah);
-		list.add(mike);
-		list.add(greg);
-
-		AgeGapFinder ageGapFinder = new AgeGapFinder(list);
-
-		AgeGapResult result = ageGapFinder.findBy(Criteria.CLOSEST);
-
-		assertEquals(sue, result.getOldest());
-		assertEquals(greg, result.getYoungest());
-	}
+        assertEquals(true, result.isPresent());
+        assertEquals(sue, result.get().getOldest());
+        assertEquals(greg, result.get().getYoungest());
+    }
 
 }

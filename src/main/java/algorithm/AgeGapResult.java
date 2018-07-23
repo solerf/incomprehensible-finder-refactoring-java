@@ -1,35 +1,33 @@
 package algorithm;
 
+import java.time.Period;
+
 public class AgeGapResult {
     private Person oldest;
     private Person youngest;
-    private long ageGap;
 
-    public AgeGapResult() {
+    AgeGapResult() {
+    }
+
+    public AgeGapResult(Person person1, Person person2) {
+        this.youngest = person1.isYoungerThan(person2) ? person1 : person2;
+        this.oldest = person1.isYoungerThan(person2) ? person2 : person1;
+    }
+
+    public static AgeGapResult empty() {
+        return new AgeGapResult();
     }
 
     public Person getOldest() {
         return oldest;
     }
 
-    public void setOldest(Person oldest) {
-        this.oldest = oldest;
-    }
-
     public Person getYoungest() {
         return youngest;
     }
 
-    public void setYoungest(Person youngest) {
-        this.youngest = youngest;
-    }
-
-    public long getAgeGap() {
-        return ageGap;
-    }
-
-    public void setAgeGap(long ageGap) {
-        this.ageGap = ageGap;
+    public int getAgeGap() {
+        return Period.between(getOldest().getBirthDate(), getYoungest().getBirthDate()).getYears();
     }
 
     @Override
@@ -37,7 +35,7 @@ public class AgeGapResult {
         return "AgeGapResult{" +
                 "oldest=" + oldest +
                 ", youngest=" + youngest +
-                ", ageGap=" + ageGap +
+                ", ageGap=" + getAgeGap() +
                 '}';
     }
 }
